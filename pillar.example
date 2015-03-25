@@ -1,4 +1,3 @@
-# vi: set ft=yaml :
 influxdb:
   version: 0.8.5
   bind-address: 0.0.0.0
@@ -13,3 +12,5 @@ influxdb:
     port: 8090
   protobuf:
     port: 8099
+
+# vi: set ft=yaml :
