@@ -28,19 +28,14 @@ influxdb_install:
     - watch:
       - cmd: influxdb_package
 
-influxdb_confdir:
-  file.directory:
-    - name: {{ influxdb_settings.conf_dir }}
-    - owner: root
-    - group: root
-    - mode: 755
-
 influxdb_config:
   file.managed:
     - name: {{ influxdb_settings.config }}
     - source: salt://influxdb/templates/config.toml.jinja
     - user: root
     - group: root
+    - makedirs: True
+    - dir_mode: 755
     - mode: 644
     - template: jinja
 
