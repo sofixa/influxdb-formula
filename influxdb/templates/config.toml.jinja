@@ -1,29 +1,28 @@
-# vi: set ft=sls :
+{% from "influxdb/map.jinja" import influxdb_settings with context -%}
+
 # WARNING: This file is managed by Salt
 # DO NOT EDIT MANUALLY
-
-{% from "influxdb/map.jinja" import influxdb with context %}
 
 # If hostname (on the OS) doesn't return a name that can be resolved by the other
 # systems in the cluster, you'll have to set the hostname to an IP or something
 # that can be resolved here.
 # hostname = ""
 
-bind-address = "{{ influxdb["bind-address"] }}"
+bind-address = "{{ influxdb_settings.get('bind-address') }}"
 
 [logging]
 # logging level can be one of "debug", "info", "warn" or "error"
-level = "{{ influxdb["logging"]["level"] }}"
-file  = "{{ influxdb["logging"]["directory"] }}/influxdb.log"         # stdout to log to standard out
+level = "{{ influxdb_settings.logging.level }}"
+file  = "{{ influxdb_settings.logging.directory }}/influxdb.log"         # stdout to log to standard out
 
 # Configure the admin server
 [admin]
-port   = {{ influxdb["admin"]["port"] }} # binding is disabled if the port isn't set
+port   = {{ influxdb_settings.admin.port }} # binding is disabled if the port isn't set
 assets = "/opt/influxdb/current/admin"
 
 # Configure the http api
 [api]
-port = {{ influxdb["api"]["port"] }} # binding is disabled if the port isn't set
+port = {{ influxdb_settings.api.port }} # binding is disabled if the port isn't set
 # ssl-port = 8084    # Ssl support is enabled if you set a port and cert
 # ssl-cert = /path/to/cert.pem
 
@@ -50,7 +49,7 @@ enabled = false
 # The raft port should be open between all servers in a cluster.
 # However, this port shouldn't be accessible from the internet.
 
-port = {{ influxdb["raft"]["port"] }}
+port = {{ influxdb_settings.raft.port }}
 
 # Where the raft logs are stored. The user running InfluxDB will need read/write access.
 dir  = "/opt/influxdb/shared/data/raft"
@@ -79,7 +78,7 @@ write-buffer-size = 10000
 # This port should be reachable between all servers in a cluster.
 # However, this port shouldn't be accessible from the internet.
 
-protobuf_port = {{ influxdb["protobuf"]["port"] }}
+protobuf_port = {{ influxdb_settings.protobuf.port }}
 
 protobuf_timeout = "2s" # the write timeout on the protobuf conn any duration parseable by time.ParseDuration
 protobuf_heartbeat = "200ms" # the heartbeat interval between the servers. must be parseable by time.ParseDuration
@@ -180,3 +179,5 @@ index-after = 1000
 # the number of requests per one log file, if new requests came in a
 # new log file will be created
 requests-per-logfile = 10000
+
+# vi: set ft=sls :

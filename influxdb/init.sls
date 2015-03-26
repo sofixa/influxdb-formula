@@ -1,15 +1,14 @@
-{% from "influxdb/map.jinja" import map with context %}
-{% from "influxdb/map.jinja" import influxdb with context %}
+{% from "influxdb/map.jinja" import influxdb_settings with context %}
 
 {% if grains['os_family'] == 'Debian' %}
-{% if influxdb['version'] is defined %}
-  {% set filename = "influxdb_" + influxdb['version'] + "_" + grains['osarch'] + ".deb" %}
+{% if influxdb_settings['version'] is defined %}
+  {% set filename = "influxdb_" + influxdb_settings['version'] + "_" + grains['osarch'] + ".deb" %}
 {% else %}
   {% set filename = "influxdb_latest_" + grains['osarch'] + ".deb" %}
 {% endif %}
 {% elif grains['os_family'] == 'RedHat' %}
-{% if influxdb['version'] is defined %}
-  {% set filename = "influxdb-" + influxdb['version'] + "-1." + grains['osarch'] + ".rpm" %}
+{% if influxdb_settings['version'] is defined %}
+  {% set filename = "influxdb-" + influxdb_settings['version'] + "-1." + grains['osarch'] + ".rpm" %}
 {% else %}
   {% set filename = "influxdb-latest-1." + grains['osarch'] + ".rpm" %}
 {% endif %}
@@ -31,14 +30,14 @@ influxdb_install:
 
 influxdb_confdir:
   file.directory:
-    - name: /etc/influxdb
+    - name: {{ influxdb_settings.conf_dir }}
     - owner: root
     - group: root
     - mode: 755
 
 influxdb_config:
   file.managed:
-    - name: /etc/influxdb/config.toml
+    - name: {{ influxdb_settings.config }}
     - source: salt://influxdb/templates/config.toml.jinja
     - user: root
     - group: root
@@ -47,7 +46,7 @@ influxdb_config:
 
 influxdb_init:
   file.managed:
-    - name: /etc/init.d/influxdb
+    - name: {{ influxdb_settings.init_dir }}/{{ influxdb_settings.service }}
     - source: salt://influxdb/templates/influxdb.service.jinja
     - user: root
     - group: root
@@ -56,21 +55,21 @@ influxdb_init:
 
 influxdb_user:
   user.present:
-    - name: influxdb
-    - fullname: InfluxDB Service User
-    - shell: /bin/false
-    - home: /opt/influxdb
+    - name: {{ influxdb_settings.user }}
+    - fullname: {{ influxdb_settings.fullname }}
+    - shell: {{ influxdb_settings.shell }}
+    - home: {{ influxdb_settings.home }}
 
 influxdb_log:
   file.directory:
-    - name: {{ influxdb["logging"]["directory"] }}
-    - user: influxdb
-    - group: influxdb
+    - name: {{ influxdb_settings.logging.directory }}
+    - user: {{ influxdb_settings.user }}
+    - group: {{ influxdb_settings.group }}
     - mode: 755
 
 influxdb_logrotate:
   file.managed:
-    - name: /etc/logrotate.d/influxdb
+    - name: {{ influxdb_settings.logrotate_conf }}
     - source: salt://influxdb/templates/logrotate.conf.jinja
     - template: jinja
     - user: root
@@ -81,7 +80,7 @@ influxdb_logrotate:
 
 influxdb_start:
   service.running:
-    - name: influxdb
+    - name: {{ influxdb_settings.service }}
     - enable: True
     - watch:
       - pkg: influxdb_install

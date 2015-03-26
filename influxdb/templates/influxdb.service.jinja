@@ -1,5 +1,5 @@
+{% from "influxdb/map.jinja" import influxdb_settings with context -%}
 #! /usr/bin/env bash
-# vi: set ft=sh :
 # WARNING: This file is managed by salt
 # DO NOT EDIT MANUALLY
 
@@ -91,7 +91,7 @@ case $1 in
     # Log the message appropriately
     cd /
     if which start-stop-daemon > /dev/null 2>&1; then
-      nohup start-stop-daemon --chuid influxdb:influxdb -d / --start --quiet --oknodo --pidfile $pidfile --exec $daemon -- -pidfile $pidfile -config $configfile > /dev/null 2>> {{ pillar["influxdb"]["logging"]["directory"] }}/influxdb_error.log &
+      nohup start-stop-daemon --chuid influxdb:influxdb -d / --start --quiet --oknodo --pidfile $pidfile --exec $daemon -- -pidfile $pidfile -config $configfile > /dev/null 2>> {{ influxdb_settings.logging.directory }}/influxdb_error.log &
     elif set | egrep '^start_daemon' > /dev/null 2>&1; then
       start_daemon -u influxdb ${daemon}-daemon -pidfile $pidfile -config $configfile &
     else
@@ -139,3 +139,5 @@ case $1 in
     exit 2
   ;;
 esac
+
+# vi: set ft=sh :

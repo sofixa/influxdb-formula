@@ -1,24 +1,57 @@
-# vi: set ft=sls :
-{%
-  set influxdb = {
-    "bind-address" : "0.0.0.0",
-    "logging" : {
-      "level" : "info",
-      "directory": "/var/log/influxdb"
+{% set os_map = salt['grains.filter_by']({
+    'Debian': {
+        'conf_dir': '/etc/influxdb',
+        'config': '/etc/influxdb/config.toml',
+        'fullname': 'InfluxDB Service User',
+        'group': 'influxdb',
+        'home': '/opt/influxdb',
+        'init_dir': '/etc/init.d',
+        'logrotate_conf': '/etc/logrotate.d/influxdb',
+        'service': 'influxdb',
+        'shell': '/bin/false',
+        'user': 'influxdb',
     },
-    "admin" : {
-      "port" : "8083"
+    'RedHat': {
+        'conf_dir': '/etc/influxdb',
+        'config': '/etc/influxdb/config.toml',
+        'fullname': 'InfluxDB Service User',
+        'group': 'influxdb',
+        'home': '/opt/influxdb',
+        'init_dir': '/etc/init.d',
+        'logrotate_conf': '/etc/logrotate.d/influxdb',
+        'service': 'influxdb',
+        'shell': '/bin/false',
+        'user': 'influxdb',
     },
-    "api" : {
-      "port" : "8086"
-    },
-    "raft" : {
-      "port" : "8090"
-    },
-    "protobuf" : {
-      "port" : "8083"
-    }
-  }
-%}
+}, merge=salt['pillar.get']('influxdb:lookup')) %}
 
-{% do influxdb.update(salt["pillar.get"]("influxdb")) %}
+{# Settings dictionary with default values #}
+{% set default_settings = {
+    'influxdb': {
+        "bind-address" : "0.0.0.0",
+        "logging" : {
+            "directory": "/var/log/influxdb",
+            "level" : "info",
+        },
+        "admin" : {
+            "port" : "8083"
+        },
+        "api" : {
+            "port" : "8086"
+        },
+        "raft" : {
+            "port" : "8090"
+        },
+        "protobuf" : {
+            "port" : "8083"
+        }
+    }
+} %}
+
+{# Merge os_map into settings dictionary #}
+{% do default_settings.influxdb.update(os_map) %}
+
+{# Update settings defaults from pillar data #}
+{% set influxdb_settings = salt['pillar.get']('influxdb', default=default_settings.influxdb, merge=True) %}}
+
+# vi: set ft=sls :
