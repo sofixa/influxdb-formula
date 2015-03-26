@@ -53,12 +53,20 @@ influxdb_init:
     - mode: 755
     - template: jinja
 
+influxdb_group:
+  group.present:
+    - name: {{ influxdb_settings.group }}
+    - system: True
+
 influxdb_user:
   user.present:
     - name: {{ influxdb_settings.user }}
     - fullname: {{ influxdb_settings.fullname }}
     - shell: {{ influxdb_settings.shell }}
     - home: {{ influxdb_settings.home }}
+    - gid_from_name: True
+    - require:
+      - group: influxdb_group
 
 influxdb_log:
   file.directory:
@@ -66,6 +74,9 @@ influxdb_log:
     - user: {{ influxdb_settings.user }}
     - group: {{ influxdb_settings.group }}
     - mode: 755
+    - require:
+      - group: influxdb_group
+      - user: influxdb_user
 
 influxdb_logrotate:
   file.managed:
