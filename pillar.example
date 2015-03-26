@@ -1,9 +1,9 @@
 influxdb:
-  version: 0.8.5
-  bind-address: 0.0.0.0
+  version: '0.8.5'
+  bind-address: '0.0.0.0'
   logging:
+    directory: '/var/log/influxdb'
     level: info
-    directory: /var/log/influxdb
   admin:
     port: 8083
   api:
@@ -12,5 +12,14 @@ influxdb:
     port: 8090
   protobuf:
     port: 8099
+  lookup:
+    config: '/etc/influxdb/config.toml'
+    confdir: '/etc/influxdb'
+    init_dir: '/etc/init.d'
+    logrotate_conf: '/etc/logrotate.d/influxdb'
+    user: influxdb
+    fullname: 'InfluxDB Service User'
+    home: '/opt/influxdb'
+    shell: '/bin/false'
 
 # vi: set ft=yaml :
