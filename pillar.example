@@ -15,6 +15,7 @@ influxdb:
   lookup:
     config: '/etc/influxdb/config.toml'
     confdir: '/etc/influxdb'
+    group: influxdb
     init_dir: '/etc/init.d'
     logrotate_conf: '/etc/logrotate.d/influxdb'
     user: influxdb
