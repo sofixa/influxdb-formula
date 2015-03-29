@@ -2,24 +2,24 @@
     'Debian': {
         'config': '/etc/influxdb/config.toml',
         'fullname': 'InfluxDB Service User',
-        'group': 'influxdb',
         'home': '/opt/influxdb',
         'init_dir': '/etc/init.d',
         'logrotate_conf': '/etc/logrotate.d/influxdb',
         'service': 'influxdb',
         'shell': '/bin/false',
-        'user': 'influxdb',
+        'system_group': 'influxdb',
+        'system_user': 'influxdb',
     },
     'RedHat': {
         'config': '/etc/influxdb/config.toml',
         'fullname': 'InfluxDB Service User',
-        'group': 'influxdb',
         'home': '/opt/influxdb',
         'init_dir': '/etc/init.d',
         'logrotate_conf': '/etc/logrotate.d/influxdb',
         'service': 'influxdb',
         'shell': '/bin/false',
-        'user': 'influxdb',
+        'system_group': 'influxdb',
+        'system_user': 'influxdb',
     },
 }, merge=salt['pillar.get']('influxdb:lookup')) %}
 

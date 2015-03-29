@@ -50,12 +50,12 @@ influxdb_init:
 
 influxdb_group:
   group.present:
-    - name: {{ influxdb_settings.group }}
+    - name: {{ influxdb_settings.system_group }}
     - system: True
 
 influxdb_user:
   user.present:
-    - name: {{ influxdb_settings.user }}
+    - name: {{ influxdb_settings.system_user }}
     - fullname: {{ influxdb_settings.fullname }}
     - shell: {{ influxdb_settings.shell }}
     - home: {{ influxdb_settings.home }}
@@ -66,8 +66,8 @@ influxdb_user:
 influxdb_log:
   file.directory:
     - name: {{ influxdb_settings.logging.directory }}
-    - user: {{ influxdb_settings.user }}
-    - group: {{ influxdb_settings.group }}
+    - user: {{ influxdb_settings.system_user }}
+    - group: {{ influxdb_settings.system_group }}
     - mode: 755
     - require:
       - group: influxdb_group

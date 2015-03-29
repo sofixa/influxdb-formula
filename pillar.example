@@ -13,13 +13,14 @@ influxdb:
   protobuf:
     port: 8099
   lookup:
-    config: '/etc/influxdb/config.toml'
     confdir: '/etc/influxdb'
-    init_dir: '/etc/init.d'
-    logrotate_conf: '/etc/logrotate.d/influxdb'
-    user: influxdb
+    config: '/etc/influxdb/config.toml'
     fullname: 'InfluxDB Service User'
     home: '/opt/influxdb'
+    init_dir: '/etc/init.d'
+    logrotate_conf: '/etc/logrotate.d/influxdb'
     shell: '/bin/false'
+    system_group: influxdb
+    system_user: influxdb
 
 # vi: set ft=yaml :
