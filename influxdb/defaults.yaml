@@ -1,13 +1,15 @@
 influxdb:
-  bind-address: 0.0.0.0
-  logging:
-    directory: /var/log/influxdb
-    level: info
-  admin:
-    port: 8083
-  api:
-    port: 8086
-  raft:
-    port: 8090
-  protobuf:
-    port: 8083
+  conf:
+    bind-address: 0.0.0.0
+    admin:
+      port: 8083
+    api:
+      port: 8086
+      read-timeout: 5s
+    logging:
+      directory: /var/log/influxdb
+      level: info
+    raft:
+      port: 8090
+    protobuf:
+      port: 8083

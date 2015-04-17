@@ -1,17 +1,18 @@
 influxdb:
   version: 0.8.5
-  bind-address: 0.0.0.0
-  logging:
-    directory: /var/log/influxdb
-    level: info
-  admin:
-    port: 8083
-  api:
-    port: 8086
-  raft:
-    port: 8090
-  protobuf:
-    port: 8099
+  conf:
+    bind-address: 0.0.0.0
+    logging:
+      directory: /var/log/influxdb
+      level: info
+    admin:
+      port: 8083
+    api:
+      port: 8086
+    raft:
+      port: 8090
+    protobuf:
+      port: 8099
   lookup:
     confdir: /etc/influxdb
     config: /etc/influxdb/config.toml
