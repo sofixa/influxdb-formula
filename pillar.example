@@ -23,5 +23,9 @@ influxdb:
     shell: /bin/false
     system_group: influxdb
     system_user: influxdb
+    tmpl:
+      config: salt://influxdb/files/config.toml.jinja
+      sysvinit_script: salt://influxdb/files/influxdb.service.jinja
+      logrotate: salt://influxdb/files/logrotate.conf.jinja
 
 # vi: set ft=yaml :

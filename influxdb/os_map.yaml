@@ -8,6 +8,10 @@ Debian:
   shell: /bin/false
   system_group: influxdb
   system_user: influxdb
+  tmpl:
+    config: salt://influxdb/files/config.toml.jinja
+    sysvinit_script: salt://influxdb/files/influxdb.service.jinja
+    logrotate: salt://influxdb/files/logrotate.conf.jinja
 RedHat:
   config: /etc/influxdb/config.toml
   fullname: InfluxDB Service User
@@ -18,3 +22,7 @@ RedHat:
   shell: /bin/false
   system_group: influxdb
   system_user: influxdb
+  tmpl:
+    config: salt://influxdb/files/config.toml.jinja
+    sysvinit_script: salt://influxdb/files/influxdb.service.jinja
+    logrotate: salt://influxdb/files/logrotate.conf.jinja
