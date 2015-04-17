@@ -31,7 +31,7 @@ influxdb_install:
 influxdb_config:
   file.managed:
     - name: {{ influxdb_settings.config }}
-    - source: salt://influxdb/templates/config.toml.jinja
+    - source: salt://influxdb/files/config.toml.jinja
     - user: root
     - group: root
     - makedirs: True
@@ -42,7 +42,7 @@ influxdb_config:
 influxdb_init:
   file.managed:
     - name: {{ influxdb_settings.init_dir }}/{{ influxdb_settings.service }}
-    - source: salt://influxdb/templates/influxdb.service.jinja
+    - source: salt://influxdb/files/influxdb.service.jinja
     - user: root
     - group: root
     - mode: 755
@@ -76,7 +76,7 @@ influxdb_log:
 influxdb_logrotate:
   file.managed:
     - name: {{ influxdb_settings.logrotate_conf }}
-    - source: salt://influxdb/templates/logrotate.conf.jinja
+    - source: salt://influxdb/files/logrotate.conf.jinja
     - template: jinja
     - user: root
     - group: root
