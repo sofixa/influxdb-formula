@@ -1,5 +1,6 @@
 Debian:
   config: /etc/influxdb/config.toml
+  etc_default: /etc/default/influxdb
   fullname: InfluxDB Service User
   home: /opt/influxdb
   init_dir: /etc/init.d
@@ -8,12 +9,9 @@ Debian:
   shell: /bin/false
   system_group: influxdb
   system_user: influxdb
-  tmpl:
-    config: salt://influxdb/files/influxdb_0.8.config.toml.jinja
-    sysvinit_script: salt://influxdb/files/influxdb_0.8.sysvinit.jinja
-    logrotate: salt://influxdb/files/logrotate.conf.jinja
 RedHat:
   config: /etc/influxdb/config.toml
+  etc_default: /etc/default/influxdb
   fullname: InfluxDB Service User
   home: /opt/influxdb
   init_dir: /etc/init.d
@@ -22,7 +20,3 @@ RedHat:
   shell: /bin/false
   system_group: influxdb
   system_user: influxdb
-  tmpl:
-    config: salt://influxdb/files/influxdb_0.8.config.toml.jinja
-    sysvinit_script: salt://influxdb/files/influxdb_0.8.sysvinit.jinja
-    logrotate: salt://influxdb/files/logrotate.conf.jinja

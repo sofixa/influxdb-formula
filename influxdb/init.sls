@@ -48,6 +48,17 @@ influxdb_init:
     - mode: 755
     - template: jinja
 
+{% if influxdb_settings.version.startswith('0.9') %}
+influxdb_default:
+  file.managed:
+    - name: {{ influxdb_settings.etc_default }}
+    - source: {{ influxdb_settings.tmpl.etc_default }}
+    - user: root
+    - group: root
+    - mode: 755
+    - template: jinja
+{% endif %}
+
 influxdb_group:
   group.present:
     - name: {{ influxdb_settings.system_group }}
