@@ -1,55 +1,52 @@
-{% set os_map = salt['grains.filter_by']({
-    'Debian': {
-        'config': '/etc/influxdb/config.toml',
-        'fullname': 'InfluxDB Service User',
-        'home': '/opt/influxdb',
-        'init_dir': '/etc/init.d',
-        'logrotate_conf': '/etc/logrotate.d/influxdb',
-        'service': 'influxdb',
-        'shell': '/bin/false',
-        'system_group': 'influxdb',
-        'system_user': 'influxdb',
-    },
-    'RedHat': {
-        'config': '/etc/influxdb/config.toml',
-        'fullname': 'InfluxDB Service User',
-        'home': '/opt/influxdb',
-        'init_dir': '/etc/init.d',
-        'logrotate_conf': '/etc/logrotate.d/influxdb',
-        'service': 'influxdb',
-        'shell': '/bin/false',
-        'system_group': 'influxdb',
-        'system_user': 'influxdb',
-    },
-}, merge=salt['pillar.get']('influxdb:lookup')) %}
+{% import_yaml "influxdb/defaults.yaml" as version_map %}
+{% import_yaml "influxdb/os_map.yaml" as os_map %}
 
-{# Settings dictionary with default values #}
-{% set default_settings = {
-    'influxdb': {
-        "bind-address" : "0.0.0.0",
-        "logging" : {
-            "directory": "/var/log/influxdb",
-            "level" : "info",
-        },
-        "admin" : {
-            "port" : "8083"
-        },
-        "api" : {
-            "port" : "8086"
-        },
-        "raft" : {
-            "port" : "8090"
-        },
-        "protobuf" : {
-            "port" : "8083"
-        }
+{# Get default settings for desired version #}
+{% set influxdb_version = salt['pillar.get']('influxdb:version', '0.8') %}
+
+{% if influxdb_version.startswith('0.8') %}
+{% set defaults = version_map.get('0_8') %}
+{% else %}
+{% set defaults = version_map.get('0_9') %}
+{% endif %}
+
+{# Filter os_map by os grain and merge overrides #}
+{% set distro_map = salt['pillar.get'](
+    'influxdb:lookup',
+    default=salt['grains.filter_by'](os_map),
+    merge=True)
+%}
+
+{# Merge distro_map into settings dictionary #}
+{% do defaults.influxdb.update(distro_map) %}
+
+{# Get legacy pillar data for backwards compatibility #}
+{% for p_entry in ['bind-address'] %}
+{% do defaults.influxdb.conf.update(
+    {
+        p_entry: salt['pillar.get'](
+            'influxdb:{}'.format(p_entry),
+            defaults.influxdb.conf.get(p_entry)
+        )
     }
-} %}
+) %}
+{% endfor %}
 
-{# Merge os_map into settings dictionary #}
-{% do default_settings.influxdb.update(os_map) %}
+{% for p_section in ['admin', 'api', 'raft', 'protobuf'] %}
+{% set conf_section = defaults.influxdb.conf.get('p_section', {}) %}
+{% do conf_section.update(
+    salt['pillar.get'](
+        'influxdb:{}'.format(p_section),
+        {}
+    )
+) %}
+{% endfor %}
 
 {# Update settings defaults from pillar data #}
-{% set influxdb_settings = salt['pillar.get']('influxdb', default=default_settings.influxdb, merge=True) %}}
+{% set influxdb_settings = salt['pillar.get'](
+    'influxdb',
+    default=defaults.influxdb,
+    merge=True)
+%}
 
 # vi: set ft=sls :

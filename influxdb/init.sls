@@ -31,7 +31,7 @@ influxdb_install:
 influxdb_config:
   file.managed:
     - name: {{ influxdb_settings.config }}
-    - source: salt://influxdb/templates/config.toml.jinja
+    - source: {{ influxdb_settings.tmpl.config }}
     - user: root
     - group: root
     - makedirs: True
@@ -42,11 +42,22 @@ influxdb_config:
 influxdb_init:
   file.managed:
     - name: {{ influxdb_settings.init_dir }}/{{ influxdb_settings.service }}
-    - source: salt://influxdb/templates/influxdb.service.jinja
+    - source: {{ influxdb_settings.tmpl.sysvinit_script }}
     - user: root
     - group: root
     - mode: 755
     - template: jinja
+
+{% if influxdb_settings.version.startswith('0.9') %}
+influxdb_default:
+  file.managed:
+    - name: {{ influxdb_settings.etc_default }}
+    - source: {{ influxdb_settings.tmpl.etc_default }}
+    - user: root
+    - group: root
+    - mode: 755
+    - template: jinja
+{% endif %}
 
 influxdb_group:
   group.present:
@@ -65,7 +76,7 @@ influxdb_user:
 
 influxdb_log:
   file.directory:
-    - name: {{ influxdb_settings.logging.directory }}
+    - name: {{ influxdb_settings.conf.logging.directory }}
     - user: {{ influxdb_settings.system_user }}
     - group: {{ influxdb_settings.system_group }}
     - mode: 755
@@ -76,7 +87,7 @@ influxdb_log:
 influxdb_logrotate:
   file.managed:
     - name: {{ influxdb_settings.logrotate_conf }}
-    - source: salt://influxdb/templates/logrotate.conf.jinja
+    - source: {{ influxdb_settings.tmpl.logrotate }}
     - template: jinja
     - user: root
     - group: root
