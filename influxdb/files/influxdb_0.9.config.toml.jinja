@@ -28,7 +28,7 @@ port = {{ influxdb_settings.conf.admin.port }}
 {% if influxdb_settings.conf.ssl_port is defined
   and influxdb_settings.conf.ssl_cert is defined %}
 ssl-port = {{ influxdb_settings.conf.api.ssl_port }}
-ssl-cert = {{ influxdb_settings.conf.api.ssl_cert }}
+ssl-cert = "{{ influxdb_settings.conf.api.ssl_cert }}"
 {% endif %}
 
 [[graphite]] # 1 or more of these sections may be present.
@@ -43,34 +43,34 @@ enabled = false
 [collectd]
 enabled = {{ influxdb_settings.conf.collectd.enabled }}
 {% if influxdb_settings.conf.collectd.address is defined %}
-address = {{ influxdb_settings.conf.collectd.address }}
+address = "{{ influxdb_settings.conf.collectd.address }}"
 {% endif %}
 {% if influxdb_settings.conf.collectd.port is defined %}
 port = {{ influxdb_settings.conf.collectd.port }}
 {% endif %}
 {% if influxdb_settings.conf.collectd.database is defined %}
-database = {{ influxdb_settings.conf.collectd.database }}
+database = "{{ influxdb_settings.conf.collectd.database }}"
 {% endif %}
 {% if influxdb_settings.conf.collectd.typesdb is defined %}
-typesdb = {{ influxdb_settings.conf.collectd.typesdb }}
+typesdb = "{{ influxdb_settings.conf.collectd.typesdb }}"
 {% endif %}
 
 [opentsdb]
 enabled = {{ influxdb_settings.conf.opentsdb.enabled }}
 {% if influxdb_settings.conf.opentsdb.address is defined %}
-address = {{ influxdb_settings.conf.opentsdb.address }}
+address = "{{ influxdb_settings.conf.opentsdb.address }}"
 {% endif %}
 {% if influxdb_settings.conf.opentsdb.port is defined %}
 port = {{ influxdb_settings.conf.opentsdb.port }}
 {% endif %}
 {% if influxdb_settings.conf.opentsdb.database is defined %}
-database = {{ influxdb_settings.conf.opentsdb.database }}
+database = "{{ influxdb_settings.conf.opentsdb.database }}"
 {% endif %}
 
 [udp]
 enabled = {{ influxdb_settings.conf.udp.enabled }}
 {% if influxdb_settings.conf.udp.address is defined %}
-address = {{ influxdb_settings.conf.udp.address }}
+address = "{{ influxdb_settings.conf.udp.address }}"
 {% endif %}
 {% if influxdb_settings.conf.udp.port is defined %}
 port = {{ influxdb_settings.conf.udp.port }}
@@ -78,18 +78,18 @@ port = {{ influxdb_settings.conf.udp.port }}
 
 [broker]
 enabled = {{ influxdb_settings.conf.broker.enabled }}
-dir  = {{ influxdb_settings.conf.broker.dir }}
+dir  = "{{ influxdb_settings.conf.broker.dir }}"
 
 [data]
 enabled = {{ influxdb_settings.conf.data.enabled }}
-dir = {{ influxdb_settings.conf.data.dir }}
+dir = "{{ influxdb_settings.conf.data.dir }}"
 retention-auto-create = {{ influxdb_settings.conf.data.retention_auto_create }}
 retention-check-enabled = {{ influxdb_settings.conf.data.retention_check_enabled }}
-retention-check-period = {{ influxdb_settings.conf.data.retention_check_period }}
+retention-check-period = "{{ influxdb_settings.conf.data.retention_check_period }}"
 
 [snapshot]
 enabled = {{ influxdb_settings.conf.snapshot.enabled }}
-bind-address = {{ influxdb_settings.conf.snapshot.bind_address }}
+bind-address = "{{ influxdb_settings.conf.snapshot.bind_address }}"
 port = {{ influxdb_settings.conf.snapshot.port }}
 
 [logging]

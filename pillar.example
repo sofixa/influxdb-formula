@@ -3,10 +3,10 @@ influxdb:
   # Configuration differs between influxdb versions
   # 0.8
   conf:
-    bind-address: 0.0.0.0
+    bind-address: '0.0.0.0'
     logging:
-      directory: /var/log/influxdb
-      level: info
+      directory: '/var/log/influxdb'
+      level: 'info'
     admin:
       port: 8083
     api:
@@ -17,67 +17,67 @@ influxdb:
       port: 8099
   # 0.9
   conf:
-    bind_address: 0.0.0.0
-    hostname: foo.example.com
+    bind_address: '0.0.0.0'
+    hostname: 'foo.example.com'
     port: 8086
-    reporting_disabled: false
+    reporting_disabled: 'false'
     authentication:
-      enabled: false
+      enabled: 'false'
     admin:
-      enabled: true
+      enabled: 'true'
       port: 8083
     api:
       ssl_cert: '/path/to/cert.pem'
       ssl_port: 8087
     broker:
-      enabled: true
+      enabled: 'true'
       dir: '/var/influxdb/raft'
     collectd:
-      address: 0.0.0.0
-      database: collectd_database
-      enabled: false
+      address: '0.0.0.0'
+      database: 'collectd_database'
+      enabled: 'false'
       port: 25827
       typesdb: '/usr/share/collectd/types.db'
     data:
       dir: '/var/influxdb/db'
-      enabled: true
-      retention_auto_create: true
-      retention_check_enabled: true
-      retention_check_period: 10m
+      enabled: 'true'
+      retention_auto_create: 'true'
+      retention_check_enabled: 'true'
+      retention_check_period: '10m'
     initialization:
-      join_urls: http://host:port,http://host2:port
+      join_urls: 'http://host:port,http://host2:port'
     logging:
-      directory: /var/log/influxdb
-      file: influxd.log
-      write_tracing: false
-      raft_tracing: false
+      directory: '/var/log/influxdb'
+      file: 'influxd.log'
+      write_tracing: 'false'
+      raft_tracing: 'false'
     opentsdb:
-      address: 0.0.0.0
-      database: opentsdb_database
-      enabled: false
+      address: '0.0.0.0'
+      database: 'opentsdb_database'
+      enabled: 'false'
       port: 4242
     snapshot:
-      bind_address: 127.0.0.1
-      enabled: true
+      bind_address: '127.0.0.1'
+      enabled: 'true'
       port: 8087
     udp:
-      bind_address: 0.0.0.0
-      enabled: false
+      bind_address: '0.0.0.0'
+      enabled: 'false'
       port: 4444
   lookup:
-    config: /etc/influxdb/config.toml
-    etc_default: /etc/default/influxdb
-    fullname: InfluxDB Service User
-    home: /opt/influxdb
-    init_dir: /etc/init.d
-    logrotate_conf: /etc/logrotate.d/influxdb
-    shell: /bin/false
-    system_group: influxdb
-    system_user: influxdb
+    config: '/etc/influxdb/config.toml'
+    etc_default: '/etc/default/influxdb'
+    fullname: 'InfluxDB Service User'
+    home: '/opt/influxdb'
+    init_dir: '/etc/init.d'
+    logrotate_conf: '/etc/logrotate.d/influxdb'
+    shell: '/bin/false'
+    system_group: 'influxdb'
+    system_user: 'influxdb'
   tmpl:
-    config: salt://influxdb/files/influxdb_0.9.config.toml.jinja
-    default: salt://influxdb/files/influxdb_0.9.default
-    sysvinit_script: salt://influxdb/files/influxdb_0.9.sysvinit.jinja
-    logrotate: salt://influxdb/files/logrotate.conf.jinja
+    config: 'salt://influxdb/files/influxdb_0.9.config.toml.jinja'
+    default: 'salt://influxdb/files/influxdb_0.9.default'
+    sysvinit_script: 'salt://influxdb/files/influxdb_0.9.sysvinit.jinja'
+    logrotate: 'salt://influxdb/files/logrotate.conf.jinja'
 
 # vi: set ft=yaml :
