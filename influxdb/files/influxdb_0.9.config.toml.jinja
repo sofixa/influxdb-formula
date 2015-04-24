@@ -27,8 +27,8 @@ port = {{ influxdb_settings.conf.admin.port }}
 [api]
 {% if influxdb_settings.conf.ssl_port is defined
   and influxdb_settings.conf.ssl_cert is defined %}
-ssl-port = {{ influxdb_settings.conf.api.ssh_port }}
-ssl-cert = {{ influxdb_settings.conf.api.ssh_cert }}
+ssl-port = {{ influxdb_settings.conf.api.ssl_port }}
+ssl-cert = {{ influxdb_settings.conf.api.ssl_cert }}
 {% endif %}
 
 [[graphite]] # 1 or more of these sections may be present.
@@ -58,22 +58,22 @@ typesdb = {{ influxdb_settings.conf.collectd.typesdb }}
 [opentsdb]
 enabled = {{ influxdb_settings.conf.opentsdb.enabled }}
 {% if influxdb_settings.conf.opentsdb.address is defined %}
-address = {{ influxdb_settings.conf.opentsdb.database }}
+address = {{ influxdb_settings.conf.opentsdb.address }}
 {% endif %}
-{% if influxdb_settings.conf.opentsdb.address is defined %}
-port = {{ influxdb_settings.conf.opentsdb.database }}
+{% if influxdb_settings.conf.opentsdb.port is defined %}
+port = {{ influxdb_settings.conf.opentsdb.port }}
 {% endif %}
-{% if influxdb_settings.conf.opentsdb.address is defined %}
+{% if influxdb_settings.conf.opentsdb.database is defined %}
 database = {{ influxdb_settings.conf.opentsdb.database }}
 {% endif %}
 
 [udp]
 enabled = {{ influxdb_settings.conf.udp.enabled }}
 {% if influxdb_settings.conf.udp.address is defined %}
-address = {{ influxdb_settings.conf.udp.database }}
+address = {{ influxdb_settings.conf.udp.address }}
 {% endif %}
-{% if influxdb_settings.conf.udp.address is defined %}
-port = {{ influxdb_settings.conf.udp.database }}
+{% if influxdb_settings.conf.udp.port is defined %}
+port = {{ influxdb_settings.conf.udp.port }}
 {% endif %}
 
 [broker]
