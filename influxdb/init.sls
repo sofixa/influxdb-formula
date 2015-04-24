@@ -48,17 +48,6 @@ influxdb_init:
     - mode: 755
     - template: jinja
 
-{% if influxdb_settings.version.startswith('0.9') %}
-influxdb_default:
-  file.managed:
-    - name: {{ influxdb_settings.etc_default }}
-    - source: {{ influxdb_settings.tmpl.etc_default }}
-    - user: root
-    - group: root
-    - mode: 755
-    - template: jinja
-{% endif %}
-
 influxdb_group:
   group.present:
     - name: {{ influxdb_settings.system_group }}
@@ -94,6 +83,39 @@ influxdb_logrotate:
     - mode: 644
     - watch:
       - file: influxdb_log
+
+{% if influxdb_settings.version.startswith('0.9') %}
+influxdb_default:
+  file.managed:
+    - name: {{ influxdb_settings.etc_default }}
+    - source: {{ influxdb_settings.tmpl.etc_default }}
+    - user: root
+    - group: root
+    - mode: 755
+    - template: jinja
+
+influxdb_broker_dir:
+  file.directory:
+    - name: {{ influxdb_settings.conf.broker.dir }}
+    - user: {{ influxdb_settings.system_user }}
+    - group: {{ influxdb_settings.system_group }}
+    - makedirs: True
+    - dir_mode: 755
+    - require:
+      - group: influxdb_group
+      - user: influxdb_user
+
+influxdb_data_dir:
+  file.directory:
+    - name: {{ influxdb_settings.conf.data.dir }}
+    - user: {{ influxdb_settings.system_user }}
+    - group: {{ influxdb_settings.system_group }}
+    - makedirs: True
+    - dir_mode: 755
+    - require:
+      - group: influxdb_group
+      - user: influxdb_user
+{% endif %}
 
 influxdb_start:
   service.running:
