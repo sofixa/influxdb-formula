@@ -7,15 +7,4 @@
 # Modify the config that generates this file instead
 #
 
-{{ influxdb_settings.logging.directory }}/*.log {
-  daily
-  rotate 3
-  copytruncate
-  compress
-  delaycompress
-  notifempty
-  missingok
-  su influxdb influxdb
-}
-
-# vi: set ft=sls :
+STDERR={{ influxdb_settings.logging.directory }}/{{ influxdb_settings.logging.file }}
