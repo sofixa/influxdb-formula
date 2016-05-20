@@ -84,17 +84,6 @@ influxdb_logrotate:
     - watch:
       - file: influxdb_log
 
-influxdb_data_dir:
-  file.directory:
-    - name: {{ influxdb_settings.conf.data.dir }}
-    - user: {{ influxdb_settings.system_user }}
-    - group: {{ influxdb_settings.system_group }}
-    - makedirs: True
-    - dir_mode: 755
-    - require:
-      - group: influxdb_group
-      - user: influxdb_user
-
 influxdb_start:
   service.running:
     - name: {{ influxdb_settings.service }}
