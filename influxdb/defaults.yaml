@@ -8,6 +8,7 @@ influxdb:
     directory: '/var/log/influxdb'
     file: 'influxd.log'
   logrotate_conf: '/etc/logrotate.d/influxdb'
+  pip_pkg: 'python-pip'
   service: 'influxdb'
   shell: '/bin/false'
   system_group: 'influxdb'

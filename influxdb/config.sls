@@ -2,13 +2,16 @@
 
 include:
   - influxdb
-  - pip
+
+influxdb_pip:
+  pkg.installed:
+    - name: {{ influxdb_settings.pip_pkg }}
 
 toml-python-module:
   pip.installed:
     - name: {{ influxdb_settings.toml_module }}
     - require:
-      - pkg: pip
+      - pkg: {{ influxdb_settings.pip_pkg }}
 
 influxdb_config:
   file.managed:
