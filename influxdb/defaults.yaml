@@ -13,6 +13,7 @@ influxdb:
   system_group: 'influxdb'
   system_user: 'influxdb'
   toml_module: toml
+  use_wget_on_install: True
   tmpl:
     config: 'salt://influxdb/files/influxdb.config.jinja'
     etc_default: 'salt://influxdb/files/influxdb.etc_default'

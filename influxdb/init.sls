@@ -28,6 +28,7 @@
   {% endif %}
 {% endif %}
 
+{% if influxdb_settings['use_wget_on_install'] == True %}
 influxdb_package:
   cmd.run:
     - name: wget -qO /tmp/{{ filename }} {{ base_url }}/{{ filename }}
@@ -39,6 +40,7 @@ influxdb_remove_broken_download:
     - onfail:
       - cmd: influxdb_package
 
+
 influxdb_install:
   pkg.installed:
     - sources:
@@ -47,6 +49,15 @@ influxdb_install:
       - cmd: influxdb_package
     - watch:
       - cmd: influxdb_package
+{% else %}
+
+
+influxdb_install:
+  pkg.installed:
+    - sources:
+      - influxdb: {{ base_url }}/{{ filename }}
+
+{% endif %}
 
 influxdb_group:
   group.present:
