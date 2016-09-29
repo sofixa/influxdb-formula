@@ -21,9 +21,7 @@ Renders the InfluxDB configuration from data provided in the ``influxdb:conf``
 pillar.
 
 It requires the installation of the
-[toml Python module](https://github.com/hit9/toml.py) via pip, for which you
-have to also include the
-[pip-formula](https://github.com/saltstack-formulas/pip-formula).
+[toml Python module](https://github.com/hit9/toml.py) via pip.
 
 The formula ships with default configuration settings for various minor versions
 of InfluxDB. That means that, if you define configuration settings in your
