@@ -3,7 +3,7 @@ influxdb:
   conf: {}
   etc_default: '/etc/default/influxdb'
   fullname: 'InfluxDB Service User'
-  home: '/opt/influxdb'
+  home: '/var/lib/influxdb'
   logging:
     directory: '/var/log/influxdb'
     file: 'influxd.log'
