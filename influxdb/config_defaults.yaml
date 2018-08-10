@@ -1,3 +1,51 @@
+'1':
+  '1':
+    collectd:
+      - enabled: false
+    continuous_queries:
+      enabled: true
+      log-enabled: true
+      run-interval: 1s
+    data:
+      data-logging-enabled: true
+      dir: /var/lib/influxdb/data
+      enabled: true
+      wal-dir: /var/lib/influxdb/wal
+      wal-logging-enabled: true
+    graphite:
+      - enabled: false
+    http:
+      auth-enabled: false
+      bind-address: :8086
+      enabled: true
+      https-certificate: /etc/ssl/influxdb.pem
+      https-enabled: false
+      log-enabled: true
+      max-row-limit: 10000
+      pprof-enabled: false
+      write-tracing: false
+    meta:
+      dir: /var/lib/influxdb/meta
+      lease-duration: 1m0s
+      logging-enabled: true
+      pprof-enabled: false
+      retention-autocreate: true
+    monitor:
+      store-database: _internal
+      store-enabled: true
+      store-interval: 10s
+    opentsdb:
+      - enabled: false
+    reporting-disabled: false
+    retention:
+      check-interval: 30m
+      enabled: true
+    shard-precreation:
+      advance-period: 30m
+      check-interval: 10m
+      enabled: true
+    udp:
+      - enabled: false     
 '0':
   '13':
     admin:
